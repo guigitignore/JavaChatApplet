@@ -103,14 +103,14 @@ public class TheApplet extends Applet {
 		// The result is sent back to the computer.
 		if (desInit==false) ISOException.throwIt(ISO7816.SW_INS_NOT_SUPPORTED);
 
-        apdu.setIncomingAndReceive();
-        byte[] buffer=apdu.getBuffer();
-        short length=(short)(buffer[4]&0xFF);
+		apdu.setIncomingAndReceive();
+		byte[] buffer=apdu.getBuffer();
+		short length=(short)(buffer[4]&0xFF);
 
 		if (length%keySize!=0) ISOException.throwIt(ISO7816.SW_WRONG_LENGTH);
 
-        cipher.doFinal(buffer,(short)5,length,buffer,(short)0);
-        apdu.setOutgoingAndSend((short)0,length);
+		cipher.doFinal(buffer,(short)5,length,buffer,(short)0);
+		apdu.setOutgoingAndSend((short)0,length);
 	}
 
 	private void desEncrypt(APDU apdu){
@@ -138,9 +138,9 @@ public class TheApplet extends Applet {
 	private void rsaDecrypt(APDU apdu){
 		if (rsaInit==false) ISOException.throwIt(ISO7816.SW_INS_NOT_SUPPORTED);
 
-        apdu.setIncomingAndReceive();
-        byte[] buffer=apdu.getBuffer();
-        short length=(short)(buffer[4]&0xFF);
+		apdu.setIncomingAndReceive();
+		byte[] buffer=apdu.getBuffer();
+		short length=(short)(buffer[4]&0xFF);
 
 		if (length>=RSA_BYTE_LENGTH) ISOException.throwIt(ISO7816.SW_WRONG_LENGTH);
 		length=rsaCipherDecrypt.doFinal(buffer, (short)0, RSA_BYTE_LENGTH, buffer, (short)0);
